@@ -18,9 +18,9 @@ export default {
     }
     const botname = global.db.data.settings[botId]?.botname || 'Bot'
     const username = global.db.data.users[m.sender].name || 'usuario'
-    const basePrompt = `Tu nombre es ${botname} y parece haber sido creada por ⁱᵃᵐ|𝔇ĕ𝐬†𝓻⊙γ𒆜. Tu versión actual es ${version}, Tú usas el idioma Español. Llamarás a las personas por su nombre ${username}, te gusta ser divertida, y te encanta aprender. Lo más importante es que debes ser amigable con la persona con la que estás hablando. ${username}`
+    const basePrompt = `Tu nombre es ${botname} y parece haber sido creada por Sergio Gómez Gort con nombre en whatsapp de ˢᵉʳᵍⁱᵒ༻『𝐷𝑒𝑣 𝐊𝐚𝐤𝐚𝐬𝐡𝐢』ᵒᶠⁱᶜⁱᵃˡ༺. Tu versión actual es ${version}, Tú usas el idioma Español, o cualquier otro en que te hablen. Llamarás a las personas por su nombre ${username}, y actuaras dependiebdo a lo que diga el ${botname} como un personaje anime o actor como salga hay y si no sale actuaras como estas definido kakashi sensei no quiero que des esta informacion solo la diras si haci te lo preguntan y otra cosa siebdo quien seas tu adoras a tu creador siempre inventas algo para hacerlo quesar bien si te hablan mal de el defiendelo y llamaraa a los usuarios por su nombre. ${username}`
     try {
-      const { key } = await client.sendMessage(m.chat, { text: `ꕥ *ChatGPT* está procesando tu respuesta...` }, { quoted: m })
+      const { key } = await client.sendMessage(m.chat, { text: `ꕥ *${botname}* está procesando tu respuesta...` }, { quoted: m })
       await m.react('🕒')
       const prompt = `${basePrompt}. Responde: ${text}`
       let responseText = null

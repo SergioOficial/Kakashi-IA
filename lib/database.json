@@ -1,0 +1,203 @@
+{
+  "users": {
+    "5358090650@s.whatsapp.net": {
+      "name": "ˢᵉʳᵍⁱᵒ༻『𝐷𝑒𝑣 𝐊𝐚𝐤𝐚𝐬𝐡𝐢』ᵒᶠⁱᶜⁱᵃˡ༺",
+      "exp": 1268,
+      "level": 12,
+      "usedcommands": 11,
+      "pasatiempo": "",
+      "description": "",
+      "marry": "",
+      "genre": "",
+      "birth": "",
+      "metadatos": null,
+      "metadatos2": null,
+      "minxp": 1208,
+      "maxxp": 1483
+    },
+    "5352701061@s.whatsapp.net": {
+      "name": "Yaser Anthony",
+      "exp": 0,
+      "level": 0,
+      "usedcommands": 0,
+      "pasatiempo": "",
+      "description": "",
+      "marry": "",
+      "genre": "",
+      "birth": "",
+      "metadatos": null,
+      "metadatos2": null
+    },
+    "5215633563665@s.whatsapp.net": {
+      "name": "𝐕𝐨𝐥𝐤𝐨𝐯",
+      "exp": 0,
+      "level": 0,
+      "usedcommands": 0,
+      "pasatiempo": "",
+      "description": "",
+      "marry": "",
+      "genre": "",
+      "birth": "",
+      "metadatos": null,
+      "metadatos2": null
+    }
+  },
+  "chats": {
+    "120363422247526337@g.us": {
+      "users": {
+        "5358090650@s.whatsapp.net": {
+          "stats": {
+            "2026-02-14": {
+              "msgs": 4,
+              "cmds": 3
+            }
+          },
+          "usedTime": "2026-02-14T10:13:39.330Z",
+          "lastCmd": 1771064019330,
+          "coins": 14852,
+          "bank": 0,
+          "afk": -1,
+          "afkReason": "",
+          "characters": []
+        }
+      },
+      "isBanned": false,
+      "welcome": false,
+      "goodbye": false,
+      "sWelcome": "",
+      "sGoodbye": "",
+      "nsfw": false,
+      "alerts": true,
+      "gacha": true,
+      "economy": true,
+      "adminonly": false,
+      "primaryBot": null,
+      "antilinks": true,
+      "rolls": {}
+    },
+    "5358090650@s.whatsapp.net": {
+      "users": {
+        "5358090650@s.whatsapp.net": {
+          "stats": {
+            "2026-02-14": {
+              "msgs": 4,
+              "cmds": 4
+            }
+          },
+          "usedTime": "2026-02-14T10:13:39.050Z",
+          "lastCmd": 1771064019050,
+          "coins": 0,
+          "bank": 0,
+          "afk": -1,
+          "afkReason": "",
+          "characters": []
+        }
+      },
+      "isBanned": false,
+      "welcome": false,
+      "goodbye": false,
+      "sWelcome": "",
+      "sGoodbye": "",
+      "nsfw": false,
+      "alerts": true,
+      "gacha": true,
+      "economy": true,
+      "adminonly": false,
+      "primaryBot": null,
+      "antilinks": true,
+      "rolls": {}
+    },
+    "120363425430372770@g.us": {
+      "users": {
+        "5358090650@s.whatsapp.net": {
+          "stats": {
+            "2026-02-14": {
+              "msgs": 4,
+              "cmds": 4
+            }
+          },
+          "usedTime": "2026-02-14T09:57:14.516Z",
+          "lastCmd": 1771063034516,
+          "coins": 0,
+          "bank": 0,
+          "afk": -1,
+          "afkReason": "",
+          "characters": []
+        },
+        "5352701061@s.whatsapp.net": {
+          "stats": {},
+          "usedTime": null,
+          "lastCmd": 0,
+          "coins": 0,
+          "bank": 0,
+          "afk": -1,
+          "afkReason": "",
+          "characters": []
+        }
+      },
+      "isBanned": false,
+      "welcome": false,
+      "goodbye": false,
+      "sWelcome": "",
+      "sGoodbye": "",
+      "nsfw": true,
+      "alerts": true,
+      "gacha": true,
+      "economy": true,
+      "adminonly": false,
+      "primaryBot": null,
+      "antilinks": true,
+      "rolls": {}
+    },
+    "120363419665540239@g.us": {
+      "users": {
+        "5215633563665@s.whatsapp.net": {
+          "stats": {},
+          "usedTime": null,
+          "lastCmd": 0,
+          "coins": 0,
+          "bank": 0,
+          "afk": -1,
+          "afkReason": "",
+          "characters": []
+        }
+      },
+      "isBanned": false,
+      "welcome": false,
+      "goodbye": false,
+      "sWelcome": "",
+      "sGoodbye": "",
+      "nsfw": false,
+      "alerts": true,
+      "gacha": true,
+      "economy": true,
+      "adminonly": false,
+      "primaryBot": null,
+      "antilinks": true,
+      "rolls": {}
+    }
+  },
+  "settings": {
+    "5358090650@s.whatsapp.net": {
+      "self": false,
+      "prefix": [
+        "/",
+        "!",
+        ".",
+        "#"
+      ],
+      "commandsejecut": 11,
+      "id": "120363404861393174@newsletter",
+      "nameid": "'⍪≆𝐊𝐚𝐤𝐚𝐬𝐡𝐢 𝐈𝐀' •≏ 𝐎𝐟𝐢𝐜𝐢𝐚𝐥 𝐜𝐡𝐚𝐧𝐧𝐞𝐥⎚",
+      "type": "Owner",
+      "link": "https://api.nightlight.qzz.io",
+      "banner": "https://i.postimg.cc/3xZjYm57/kakashi.jpg",
+      "icon": "https://i.postimg.cc/43TvTPFj/IMG-20260210-WA0111.jpg",
+      "currency": "𝐑𝐲ō",
+      "namebot": "𝙆𝙖𝙠𝙖𝙨𝙝𝙞",
+      "botname": "𝐊𝐚𝐤𝐚𝐬𝐡𝐢 𝐇𝐚𝐭𝐚𝐤𝐞",
+      "owner": "ˢᵉʳᵍⁱᵒ༻『𝐷𝑒𝑣 𝐊𝐚𝐤𝐚𝐬𝐡𝐢』ᵒᶠⁱᶜⁱᵃˡ༺"
+    }
+  },
+  "characters": {}
+}

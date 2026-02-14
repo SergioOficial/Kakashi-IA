@@ -55,11 +55,11 @@ const log = {
   
 const { say } = cfonts
 console.log(chalk.magentaBright('\n❀ Iniciando...'))
-  say('Yuki Suou', {
+  say('kakashi', {
   align: 'center',           
   gradient: ['red', 'blue'] 
 })
-  say('Made with love by Destroy', {
+  say('Made with love by sergio', {
   font: 'console',
   align: 'center',
   gradient: ['blue', 'magenta']

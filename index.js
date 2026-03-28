@@ -1,91 +1,162 @@
 import "./settings.js"
 import main from './main.js'
 import events from './commands/events.js'
-import { Browsers, makeWASocket, makeCacheableSignalKeyStore, useMultiFileAuthState, fetchLatestBaileysVersion, jidDecode, DisconnectReason, jidNormalizedUser, } from "@whiskeysockets/baileys";
-import cfonts from 'cfonts';
-import pino from "pino";
-import qrcode from "qrcode-terminal";
-import chalk from "chalk";
-import fs from "fs";
-import path from "path";
-import readlineSync from "readline-sync";
-import readline from "readline";
-import os from "os";
-import { smsg } from "./lib/message.js";
-import db from "./lib/system/database.js";
-import { startSubBot } from './lib/subs.js';
-import { exec, execSync } from "child_process";
-import express from "express";
+import { Browsers, makeWASocket, makeCacheableSignalKeyStore, useMultiFileAuthState, fetchLatestBaileysVersion, jidDecode, DisconnectReason, jidNormalizedUser } from "@whiskeysockets/baileys"
+import cfonts from 'cfonts'
+import pino from "pino"
+import qrcode from "qrcode-terminal"
+import chalk from "chalk"
+import fs from "fs"
+import path from "path"
+import readlineSync from "readline-sync"
+import readline from "readline"
+import os from "os"
+import { smsg } from "./lib/message.js"
+import db from "./lib/system/database.js"
+import { startSubBot } from './lib/subs.js'
+import { exec, execSync } from "child_process"
+import express from "express"
+
 const log = {
   info: (msg) => console.log(chalk.bgBlue.white.bold(`INFO`), chalk.white(msg)),
-  success: (msg) =>
-    console.log(chalk.bgGreen.white.bold(`SUCCESS`), chalk.greenBright(msg)),
-  warn: (msg) =>
-    console.log(
-      chalk.bgYellowBright.blueBright.bold(`WARNING`),
-      chalk.yellow(msg),
-    ),
-  warning: (msg) =>
-    console.log(chalk.bgYellowBright.red.bold(`WARNING`), chalk.yellow(msg)),
-  error: (msg) =>
-    console.log(chalk.bgRed.white.bold(`ERROR`), chalk.redBright(msg)),
-};
+  success: (msg) => console.log(chalk.bgGreen.white.bold(`SUCCESS`), chalk.greenBright(msg)),
+  warn: (msg) => console.log(chalk.bgYellowBright.blueBright.bold(`WARNING`), chalk.yellow(msg)),
+  warning: (msg) => console.log(chalk.bgYellowBright.red.bold(`WARNING`), chalk.yellow(msg)),
+  error: (msg) => console.log(chalk.bgRed.white.bold(`ERROR`), chalk.redBright(msg)),
+}
 
-  let phoneNumber = global.botNumber || ""
-  let phoneInput = ""
-  const methodCode = process.argv.includes("--code")
-  const DIGITS = (s = "") => String(s).replace(/\D/g, "");
+// ------------------------------------------------------------
+// DETECCIÓN DE ENTORNO
+const isRender = !!process.env.RENDER || !!process.env.PORT
 
-  function normalizePhoneForPairing(input) {
-    let s = DIGITS(input);
-    if (!s) return "";
-    if (s.startsWith("0")) s = s.replace(/^0+/, "");
-    if (s.length === 10 && s.startsWith("3")) {
-      s = "57" + s;
-    }
-    if (s.startsWith("52") && !s.startsWith("521") && s.length >= 12) {
-      s = "521" + s.slice(2);
-    }
-    if (s.startsWith("54") && !s.startsWith("549") && s.length >= 11) {
-      s = "549" + s.slice(2);
-    }
-    return s;
+let phoneNumber = global.botNumber || ""
+let usePairingCode = false    // true = usar código de 8 dígitos, false = QR
+
+// ------------------------------------------------------------
+// LÓGICA DE AUTENTICACIÓN SEGÚN ENTORNO
+if (isRender) {
+  // --- EN RENDER: automático con variable de entorno ---
+  const envPhone = process.env.PAIRING_PHONE
+  if (!envPhone) {
+    log.error("❌ Variable de entorno PAIRING_PHONE no definida. Por favor, configúrala en Render.")
+    process.exit(1)
   }
-  
+
+  // Normalizar el número (función copiada de más abajo)
+  const DIGITS = (s = "") => String(s).replace(/\D/g, "")
+  const normalizePhoneForPairing = (input) => {
+    let s = DIGITS(input)
+    if (!s) return ""
+    if (s.startsWith("0")) s = s.replace(/^0+/, "")
+    if (s.length === 10 && s.startsWith("3")) s = "57" + s
+    if (s.startsWith("52") && !s.startsWith("521") && s.length >= 12) s = "521" + s.slice(2)
+    if (s.startsWith("54") && !s.startsWith("549") && s.length >= 11) s = "549" + s.slice(2)
+    return s
+  }
+
+  phoneNumber = normalizePhoneForPairing(envPhone)
+  if (!phoneNumber) {
+    log.error("❌ Número de teléfono inválido en PAIRING_PHONE. Asegúrate de usar el formato internacional sin '+' (ej. 521234567890).")
+    process.exit(1)
+  }
+
+  usePairingCode = true
+  log.info(`🌐 Modo Render detectado. Usando pairing code para ${phoneNumber}.`)
+} else {
+  // --- EN TERMUX: modo interactivo original ---
+  console.log(chalk.bold.redBright(`\nElija método de inicio:`))
+  console.log(chalk.bold.green(`[1] Usar código QR`))
+  console.log(chalk.bold.green(`[2] Usar código de 8 dígitos (pairing)`))
+  let opcion = ""
+  do {
+    opcion = readlineSync.question("--> ")
+  } while (!/^[12]$/.test(opcion))
+
+  if (opcion === "2") {
+    usePairingCode = true
+    console.log(chalk.bold.redBright(`\nPor favor, ingrese el número de WhatsApp.\n${chalk.bold.yellowBright("Ejemplo: +57301******")}\n${chalk.bold.magentaBright('---> ')}`))
+    const phoneInput = readlineSync.question("")
+    const DIGITS = (s = "") => String(s).replace(/\D/g, "")
+    const normalizePhoneForPairing = (input) => {
+      let s = DIGITS(input)
+      if (!s) return ""
+      if (s.startsWith("0")) s = s.replace(/^0+/, "")
+      if (s.length === 10 && s.startsWith("3")) s = "57" + s
+      if (s.startsWith("52") && !s.startsWith("521") && s.length >= 12) s = "521" + s.slice(2)
+      if (s.startsWith("54") && !s.startsWith("549") && s.length >= 11) s = "549" + s.slice(2)
+      return s
+    }
+    phoneNumber = normalizePhoneForPairing(phoneInput)
+    if (!phoneNumber) {
+      log.error("Número no válido. Saliendo.")
+      process.exit(1)
+    }
+  } else {
+    usePairingCode = false
+    log.info("Usando QR. Escanéalo con WhatsApp.")
+  }
+}
+
+// ------------------------------------------------------------
+// MOSTRAR BANNER
 const { say } = cfonts
 console.log(chalk.magentaBright('\n❀ Iniciando...'))
-  say('Ayase IA', {
-  align: 'center',           
-  gradient: ['red', 'blue'] 
+say('Ayase IA', {
+  align: 'center',
+  gradient: ['red', 'blue']
 })
-  say('Made with love by sergio', {
+say('Made with love by sergio', {
   font: 'console',
   align: 'center',
   gradient: ['blue', 'magenta']
 })
 
+// ------------------------------------------------------------
+// CONFIGURACIÓN DE SUBS Y SERVIDOR EXPRESS
 const BOT_TYPES = [
   { name: 'SubBot', folder: './Sessions/Subs', starter: startSubBot }
 ]
 
 global.conns = global.conns || []
 const reconnecting = new Set()
-const app = express();
-const port = process.env.PORT || 3000;
+const app = express()
+const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
-           res.send('AyaseBot-MD funcionando');
-});
+  res.send('AyaseBot-MD funcionando')
+})
 
-app.get('/status', (req, res) =>  {
-        res.json({
-        status: 'ok',
-        whatsapp: sock?. user ? 'conectado' : 'iniciado'
-});
-});
+app.get('/status', (req, res) => {
+  res.json({
+    status: 'ok',
+    whatsapp: global.client?.user ? 'conectado' : 'iniciado'
+  })
+})
+
+// Endpoint opcional para ver el último código de emparejamiento (si se generó)
+let lastPairingCode = null
+app.get('/code', (req, res) => {
+  if (lastPairingCode) {
+    res.send(`
+      <html>
+        <body>
+          <h2>Código de emparejamiento (8 dígitos)</h2>
+          <p style="font-size: 2em;">${lastPairingCode}</p>
+          <p>Escanea este código en WhatsApp: Ajustes → Dispositivos vinculados → Vincular con número de teléfono</p>
+        </body>
+      </html>
+    `)
+  } else {
+    res.send('No hay código disponible aún.')
+  }
+})
+
 app.listen(port, () => {
-        console.log(`Servidor web escuchando en puerto ${port}`);
-});
+  console.log(`Servidor web escuchando en puerto ${port}`)
+})
+
+// ------------------------------------------------------------
+// FUNCIONES DE CARGA DE SUBS (sin cambios)
 async function loadBots() {
   for (const { name, folder, starter } of BOT_TYPES) {
     if (!fs.existsSync(folder)) continue
@@ -108,20 +179,8 @@ async function loadBots() {
   setTimeout(loadBots, 60 * 1000)
 }
 
-(async () => {
-  await loadBots()
-})()
-
-      while (!/^[2]$/.test) {
-    console.log(chalk.bold.redBright(`No se permiten numeros que no sean 1 o 2, tampoco letras o símbolos especiales.`));
-    opcion = readlineSync.question("--> ");
-  }
-  if ( "2") {
-    console.log(chalk.bold.redBright(`\nPor favor, Ingrese el número de WhatsApp.\n${chalk.bold.yellowBright("Ejemplo: +57301******")}\n${chalk.bold.magentaBright('---> ')} `));
-    phoneInput = readlineSync.question("");
-    phoneNumber = normalizePhoneForPairing(phoneInput);
-}
-
+// ------------------------------------------------------------
+// FUNCIÓN PRINCIPAL DEL BOT (MODIFICADA PARA USAR usePairingCode Y phoneNumber)
 async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState(global.sessionName)
   const { version, isLatest } = await fetchLatestBaileysVersion()
@@ -151,32 +210,37 @@ async function startBot() {
     keepAliveIntervalMs: 45000,
     maxIdleTimeMs: 60000,
   })
-  
-  global.client = clientt;
-  client.isInit = false
-  client.ev.on("creds.update", saveCreds)
-  if ("2" && !fs.existsSync("./Sessions/Owner/creds.json")) {
-  setTimeout(async () => {
-    try {
-       if (!state.creds.registered) {
-        const pairing = await global.client.requestPairingCode(phoneNumber)
-        const codeBot = pairing?.match(/.{1,4}/g)?.join("-") || pairing
-        console.log(chalk.bold.white(chalk.bgMagenta(`Código de emparejamiento:`)), chalk.bold.white(chalk.white(codeBot)))
-      }
-    } catch (err) {
-      console.log(chalk.red("Error al generar código:"), err)
-    }
-  }, 3000)
-}
 
-  client.sendText = (jid, text, quoted = "", options) =>
-  client.sendMessage(jid, { text: text, ...options }, { quoted })
-  client.ev.on("connection.update", async (update) => {
-    const { qr, connection, lastDisconnect, isNewLogin, receivedPendingNotifications, } = update
-    
+  global.client = clientt
+  clientt.isInit = false
+  clientt.ev.on("creds.update", saveCreds)
+
+  // GENERACIÓN DE PAIRING CODE SI ES NECESARIO
+  if (usePairingCode && !fs.existsSync("./Sessions/Owner/creds.json")) {
+    setTimeout(async () => {
+      try {
+        if (!state.creds.registered) {
+          const pairing = await global.client.requestPairingCode(phoneNumber)
+          const codeBot = pairing?.match(/.{1,4}/g)?.join("-") || pairing
+          lastPairingCode = codeBot
+          console.log(chalk.bold.white(chalk.bgMagenta(`Código de emparejamiento:`)), chalk.bold.white(chalk.white(codeBot)))
+        }
+      } catch (err) {
+        console.log(chalk.red("Error al generar código:"), err)
+      }
+    }, 3000)
+  }
+
+  // AGREGAR MÉTODO sendText
+  clientt.sendText = (jid, text, quoted = "", options) =>
+    clientt.sendMessage(jid, { text: text, ...options }, { quoted })
+
+  // MANEJADOR DE CONEXIÓN
+  clientt.ev.on("connection.update", async (update) => {
+    const { qr, connection, lastDisconnect, isNewLogin, receivedPendingNotifications } = update
 
     if (connection === "close") {
-      const reason = lastDisconnect?.error?.output?.statusCode || 0;
+      const reason = lastDisconnect?.error?.output?.statusCode || 0
       if (reason === DisconnectReason.connectionLost) {
         log.warning("Se perdió la conexión al servidor, intento reconectarme..")
         startBot()
@@ -185,7 +249,7 @@ async function startBot() {
         startBot()
       } else if (reason === DisconnectReason.restartRequired) {
         log.warning("Es necesario reiniciar..")
-        startBot();
+        startBot()
       } else if (reason === DisconnectReason.timedOut) {
         log.warning("Tiempo de conexión agotado, intentando reconectarse...")
         startBot()
@@ -201,50 +265,62 @@ async function startBot() {
       } else if (reason === DisconnectReason.forbidden) {
         log.error("Error de conexión, escanee nuevamente y ejecute...")
         exec("rm -rf ./Sessions/Owner/*")
-        process.exit(1);
+        process.exit(1)
       } else if (reason === DisconnectReason.multideviceMismatch) {
         log.warning("Inicia nuevamente")
         exec("rm -rf ./Sessions/Owner/*")
         process.exit(0)
       } else {
-        client.end(`Motivo de desconexión desconocido : ${reason}|${connection}`)
+        clientt.end(`Motivo de desconexión desconocido : ${reason}|${connection}`)
       }
     }
-    if (connection == "open") {
-         const userJid = jidNormalizedUser(client.user.id)
-         const userName = client.user.name || "Desconocido"
-         console.log(chalk.green.bold(`[ ✿ ]  Conectado a: ${userName}`))
+
+    if (connection === "open") {
+      const userJid = jidNormalizedUser(clientt.user.id)
+      const userName = clientt.user.name || "Desconocido"
+      console.log(chalk.green.bold(`[ ✿ ]  Conectado a: ${userName}`))
     }
+
     if (isNewLogin) {
       log.info("Nuevo dispositivo detectado")
     }
-    if (receivedPendingNotifications == "true") {
-      log.warn("Por favor espere aproximadamente 1 minuto...")
-      client.ev.flush()
-    }
-  });
 
+    if (receivedPendingNotifications === "true") {
+      log.warn("Por favor espere aproximadamente 1 minuto...")
+      clientt.ev.flush()
+    }
+
+    // Si se usa QR y estamos en modo QR, mostrarlo
+    if (qr && !usePairingCode) {
+      qrcode.generate(qr, { small: true })
+      console.log(chalk.yellow("Escanea el código QR con WhatsApp"))
+    }
+  })
+
+  // MANEJADOR DE MENSAJES
   let m
-  client.ev.on("messages.upsert", async ({ messages }) => {
+  clientt.ev.on("messages.upsert", async ({ messages }) => {
     try {
       m = messages[0]
       if (!m.message) return
       m.message = Object.keys(m.message)[0] === "ephemeralMessage" ? m.message.ephemeralMessage.message : m.message
       if (m.key && m.key.remoteJid === "status@broadcast") return
-      if (!client.public && !m.key.fromMe && messages.type === "notify") return
+      if (!clientt.public && !m.key.fromMe && messages.type === "notify") return
       if (m.key.id.startsWith("BAE5") && m.key.id.length === 16) return
-      m = await smsg(client, m)
-      main(client, m, messages)
+      m = await smsg(clientt, m)
+      main(clientt, m, messages)
     } catch (err) {
       console.log(err)
     }
   })
+
   try {
-  await events(client, m)
+    await events(clientt, m)
   } catch (err) {
-   console.log(chalk.gray(`[ BOT  ]  → ${err}`))
+    console.log(chalk.gray(`[ BOT  ]  → ${err}`))
   }
-  client.decodeJid = (jid) => {
+
+  clientt.decodeJid = (jid) => {
     if (!jid) return jid
     if (/:\d+@/gi.test(jid)) {
       let decode = jidDecode(jid) || {}
@@ -253,8 +329,11 @@ async function startBot() {
   }
 }
 
-(async () => {
-    global.loadDatabase()
-    console.log(chalk.gray('[ ✿  ]  Base de datos cargada correctamente.'))
+// ------------------------------------------------------------
+// INICIO
+;(async () => {
+  global.loadDatabase()
+  console.log(chalk.gray('[ ✿  ]  Base de datos cargada correctamente.'))
+  await loadBots()
   await startBot()
 })()

@@ -15,7 +15,7 @@ import { smsg } from "./lib/message.js";
 import db from "./lib/system/database.js";
 import { startSubBot } from './lib/subs.js';
 import { exec, execSync } from "child_process";
-
+import express from "express";
 const log = {
   info: (msg) => console.log(chalk.bgBlue.white.bold(`INFO`), chalk.white(msg)),
   success: (msg) =>
@@ -71,7 +71,22 @@ const BOT_TYPES = [
 
 global.conns = global.conns || []
 const reconnecting = new Set()
+const app = express();
+const port = process.env.PORT || 3000;
 
+app.get('/', (req, res) => {
+           res.send('AyaseBot-MD funcionando');
+});
+
+app.get('/status', (req, res) =>  {
+        res.json({
+        status: 'ok',
+        whatsapp: sock?. user ? 'conectado' : 'iniciado'
+});
+});
+app.listen(port, () => {
+        console.log(`Servidor web escuchando en puerto ${port}`);
+});
 async function loadBots() {
   for (const { name, folder, starter } of BOT_TYPES) {
     if (!fs.existsSync(folder)) continue

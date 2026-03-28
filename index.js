@@ -33,7 +33,6 @@ const log = {
 
   let phoneNumber = global.botNumber || ""
   let phoneInput = ""
-  const methodCodeQR = process.argv.includes("--qr")
   const methodCode = process.argv.includes("--code")
   const DIGITS = (s = "") => String(s).replace(/\D/g, "");
 
@@ -113,22 +112,14 @@ async function loadBots() {
   await loadBots()
 })()
 
-let opcion;
-if (methodCodeQR) {
-  opcion = "1";
-} else if (methodCode) {
-  opcion = "2";
-} else if (!fs.existsSync("./Sessions/Owner/creds.json")) {
-  opcion = readlineSync.question(chalk.bold.white("\nSeleccione una opción:\n") + chalk.blueBright("1. Con código QR\n") + chalk.cyan("2. Con código de texto de 8 dígitos\n--> "));
-  while (!/^[1-2]$/.test(opcion)) {
+      while (!/^[2]$/.test) {
     console.log(chalk.bold.redBright(`No se permiten numeros que no sean 1 o 2, tampoco letras o símbolos especiales.`));
     opcion = readlineSync.question("--> ");
   }
-  if (opcion === "2") {
+  if ( "2") {
     console.log(chalk.bold.redBright(`\nPor favor, Ingrese el número de WhatsApp.\n${chalk.bold.yellowBright("Ejemplo: +57301******")}\n${chalk.bold.magentaBright('---> ')} `));
     phoneInput = readlineSync.question("");
     phoneNumber = normalizePhoneForPairing(phoneInput);
-  }
 }
 
 async function startBot() {
@@ -164,7 +155,7 @@ async function startBot() {
   global.client = clientt;
   client.isInit = false
   client.ev.on("creds.update", saveCreds)
-  if (opcion === "2" && !fs.existsSync("./Sessions/Owner/creds.json")) {
+  if ("2" && !fs.existsSync("./Sessions/Owner/creds.json")) {
   setTimeout(async () => {
     try {
        if (!state.creds.registered) {
@@ -183,11 +174,6 @@ async function startBot() {
   client.ev.on("connection.update", async (update) => {
     const { qr, connection, lastDisconnect, isNewLogin, receivedPendingNotifications, } = update
     
-    if (qr != 0 && qr != undefined || methodCodeQR) {
-    if (opcion == '1' || methodCodeQR) {
-      console.log(chalk.green.bold("[ ✿ ] Escanea este código QR"));
-      qrcode.generate(qr, { small: true });
-    }}
 
     if (connection === "close") {
       const reason = lastDisconnect?.error?.output?.statusCode || 0;

@@ -1,14 +1,9 @@
 export default {
-  command: ['report', 'reporte', 'sug', 'suggest'],
+  command: ['report', 'reporte', 'sug', 'suggest', 'sugerencia'],
   category: 'info',
   run: async (client, m, args, usedPrefix, command, text) => {
     const texto = text.trim()
     const now = Date.now()
-    const cooldown = global.db.data.users[m.sender].sugCooldown || 0
-    const restante = cooldown - now
-    if (restante > 0) {
-      return m.reply(`ꕥ Espera *${msToTime(restante)}* para volver a usar este comando.`)
-    }
     if (!texto) {
       return m.reply(`《✧》 Debes *escribir* el *reporte* o *sugerencia*.`)
     }

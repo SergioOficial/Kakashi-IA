@@ -16,7 +16,7 @@ export default async (client, m) => {
       for (const p of anu.participants) {
         const jid = p.phoneNumber
         const phone = p.phoneNumber?.split('@')[0] || jid.split('@')[0]
-        const pp = await client.profilePictureUrl(jid, 'image').catch(_ => 'https://cdn.yuki-wabot.my.id/files/2PVh.jpeg')       
+        const pp = await client.profilePictureUrl(jid, 'image').catch(_ => 'https://cdn.yuki-wabot.my.idantilink.js/files/2PVh.jpeg')       
         const mensajes = { add: chat.sWelcome ? `\n┊➤ ${chat.sWelcome.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '✿ Sin Desc ✿')}` : '', remove: chat.sGoodbye ? `\n┊➤ ${chat.sGoodbye.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '✿ Sin Desc ✿')}` : '', leave: chat.sGoodbye ? `\n┊➤ ${chat.sGoodbye.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '✿ Sin Desc ✿')}` : '' }
         const fakeContext = {
           contextInfo: {
@@ -41,38 +41,20 @@ export default async (client, m) => {
           }
         }
         if (anu.action === 'add' && chat?.welcome && (!primaryBotId || primaryBotId === botId)) {
-          const caption = `╭┈──̇─̇─̇────̇─̇─̇──◯◝
-┊「 *Bienvenido (⁠ ⁠ꈍ⁠ᴗ⁠ꈍ⁠)* 」
-┊︶︶︶︶︶︶︶︶︶︶︶
-┊  *Nombre ›* @${phone}
-┊  *Grupo ›* ${metadata.subject}
-┊┈─────̇─̇─̇─────◯◝
-┊➤ *Usa /menu para ver los comandos.*
-┊➤ *Ahora somos ${memberCount} miembros.* ${mensajes[anu.action]}
-┊ ︿︿︿︿︿︿︿︿︿︿︿
-╰─────────────────╯`
+          const caption = `「 *Bienvenido/a* 」\n  *Hola›* @${phone} a ${metadata.subject}\n➤ *Usa #menu para ver los comandos.*\n➤ *Ahora somos ${memberCount} ciudadanos👌🏻.* ${mensajes[anu.action]}`
          await client.sendMessage(anu.id, { image: { url: pp }, caption, ...fakeContext })     
         }
         if ((anu.action === 'remove' || anu.action === 'leave') && chat?.goodbye && (!primaryBotId || primaryBotId === botId)) {
-          const caption = `╭┈──̇─̇─̇────̇─̇─̇──◯◝
-┊「 *Hasta pronto (⁠╥⁠﹏⁠╥⁠)* 」
-┊︶︶︶︶︶︶︶︶︶︶︶
-┊  *Nombre ›* @${phone}
-┊  *Grupo ›* ${metadata.subject}
-┊┈─────̇─̇─̇─────◯◝
-┊➤ *Ojalá que vuelva pronto.*
-┊➤ *Ahora somos ${memberCount} miembros.* ${mensajes[anu.action]}
-┊ ︿︿︿︿︿︿︿︿︿︿︿
-╰─────────────────╯`
+          const caption = `「 *Hasta pronto* 」\n  *Nos vemos ›* @${phone} fue un gusto tenerte en * ${metadata.subject}\n➤ *Ojalá que vuelva pronto.*\n➤ *Ahora somos ${memberCount} ciudadanos en el reyno.* ${mensajes[anu.action]}`
           await client.sendMessage(anu.id, { image: { url: pp }, caption, ...fakeContext })
         }
         if (anu.action === 'promote' && chat?.alerts && (!primaryBotId || primaryBotId === botId)) {
           const usuario = anu.author
-          await client.sendMessage(anu.id, { text: `「✎」 *@${phone}* ha sido promovido a Administrador por *@${usuario.split('@')[0]}.*`, mentions: [jid, usuario, ...groupAdmins.map(v => v.id)] })
+          await client.sendMessage(anu.id, { text: `「✎」 *@${phone}* ha sido promovido a ministro por *@${usuario.split('@')[0]}.*`, mentions: [jid, usuario, ...groupAdmins.map(v => v.id)] })
         }
         if (anu.action === 'demote' && chat?.alerts && (!primaryBotId || primaryBotId === botId)) {
           const usuario = anu.author
-          await client.sendMessage(anu.id, { text: `「✎」 *@${phone}* ha sido degradado de Administrador por *@${usuario.split('@')[0]}.*`, mentions: [jid, usuario, ...groupAdmins.map(v => v.id)] })
+          await client.sendMessage(anu.id, { text: `「✎」 *@${phone}* ha sido degradado de ministro por *@${usuario.split('@')[0]}.*`, mentions: [jid, usuario, ...groupAdmins.map(v => v.id)] })
         }
       }
     } catch (err) {

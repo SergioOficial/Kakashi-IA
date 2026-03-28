@@ -2,39 +2,54 @@ import fetch from 'node-fetch'
 
 export default {
   command: ['pinterest', 'pin'],
-  category: 'search',
-  run: async (client, m, args, command) => {
+  category: 'downloader',
+run: async (client, m, args, command) => {
+  try {
     const text = args.join(' ')
     const isPinterestUrl = /^https?:\/\//.test(text)
+
     if (!text) {
       return m.reply('《✧》 Por favor, ingresa un término de búsqueda o un enlace de Pinterest.')
     }
-    try {
-      if (isPinterestUrl) {
-        const data = await getPinterestDownload(text)
-        if (!data) return m.reply('ꕥ No se pudo obtener el contenido.')
-        const caption = `ㅤ۟∩　ׅ　★　ׅ　🅟𝖨𝖭 🅓ownload　ׄᰙ　\n\n` + `${data.title ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Título* › ${data.title}\n` : ''}` + `${data.description ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Descripción* › ${data.description}\n` : ''}` + `${data.author ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Autor* › ${data.author}\n` : ''}` + `${data.username ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Usuario* › ${data.username}\n` : ''}` + `${data.followers ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Seguidores* › ${data.followers}\n` : ''}` + `${data.uploadDate ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Fecha* › ${data.uploadDate}\n` : ''}` + `${data.likes ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Likes* › ${data.likes}\n` : ''}` + `${data.comments ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Comentarios* › ${data.comments}\n` : ''}` + `${data.views ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Vistas* › ${data.views}\n` : ''}` + `${data.saved ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Guardados* › ${data.saved}\n` : ''}` + `${data.format ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Formato* › ${data.format}\n` : ''}` + `𖣣ֶㅤ֯⌗ ☆  ⬭ *Enlace* › ${text}`
-        if (data.type === 'video') {
-          await client.sendMessage(m.chat, { video: { url: data.url }, caption, mimetype: 'video/mp4', fileName: 'pin.mp4' }, { quoted: m })
-        } else if (data.type === 'image') {
-          await client.sendMessage(m.chat, { image: { url: data.url }, caption }, { quoted: m })
-        } else {
-          throw new Error('Contenido no soportado.')
-        }
-      } else {
-        const results = await getPinterestSearch(text)
-        if (!results || results.length === 0) {
-          return m.reply(`《✧》 No se encontraron resultados para *${text}*.`)
-        }
-        const medias = results.slice(0, 10).map(r => ({ type: r.type === 'video' ? 'video' : 'image', data: { url: r.image }, caption: `ㅤ۟∩　ׅ　★　ׅ　🅟𝖨𝖭 🅢earch　ׄᰙ　\n\n` + `${r.title ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Título* › ${r.title}\n` : ''}` + `${r.description ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Descripción* › ${r.description}\n` : ''}` + `${r.name ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Autor* › ${r.name}\n` : ''}` + `${r.username ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Usuario* › ${r.username}\n` : ''}` + `${r.followers ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Seguidores* › ${r.followers}\n` : ''}` + `${r.likes ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Likes* › ${r.likes}\n` : ''}` + `${r.created_at ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Fecha* › ${r.created_at}\n` : ''}` }))
-        await client.sendAlbumMessage(m.chat, medias, { quoted: m })
+
+    if (isPinterestUrl) {
+      const data = await getPinterestDownload(text)
+      if (!data) throw new Error('No se pudo obtener el contenido.')
+
+      const caption = `《✧》 Pinterest Downloader`
+
+      if (data.type === 'video') {
+        await client.sendMessage(
+          m.chat,
+          { video: { url: data.url }, caption, mimetype: 'video/mp4', fileName: 'pin.mp4' },
+          { quoted: m }
+        )
+      } else if (data.type === 'image') {
+        await client.sendMessage(
+          m.chat,
+          { image: { url: data.url }, caption },
+          { quoted: m }
+        )
       }
-    } catch (e) {
-      await m.reply(`> An unexpected error occurred while executing command *${usedPrefix + command}*. Please try again or contact support if the issue persists.\n> [Error: *${e.message}*]`)
+
+    } else {
+      const results = await getPinterestSearch(text)
+      if (!results.length) throw new Error('No se encontraron resultados.')
+
+      const first = results[0]
+
+      await client.sendMessage(
+        m.chat,
+        { image: { url: first.image }, caption: '《✧》 Resultado de búsqueda Pinterest' },
+        { quoted: m }
+      )
     }
+
+  } catch (e) {
+    await m.reply(`Error: ${e.message}`)
   }
 }
-
+}
 async function getPinterestDownload(url) {
   const apis = [
   { endpoint: `${global.APIs.stellar.url}/dl/pinterest?url=${encodeURIComponent(url)}&key=${global.APIs.stellar.key}`, extractor: res => {
@@ -77,7 +92,7 @@ async function getPinterestDownload(url) {
     await new Promise(r => setTimeout(r, 500))
   }
   return null
-}
+  }
 
 async function getPinterestSearch(query) {
   const apis = [`${global.APIs.stellar.url}/search/pinterest?query=${encodeURIComponent(query)}&key=${global.APIs.stellar.key}`, `${global.APIs.stellar.url}/search/pinterestv2?query=${encodeURIComponent(query)}&key=${global.APIs.stellar.key}`, `${global.APIs.delirius.url}/search/pinterestv2?text=${encodeURIComponent(query)}`, `${global.APIs.vreden.url}/api/v1/search/pinterest?query=${encodeURIComponent(query)}`, `${global.APIs.vreden.url}/api/v2/search/pinterest?query=${encodeURIComponent(query)}&limit=10&type=videos`, `${global.APIs.delirius.url}/search/pinterest?text=${encodeURIComponent(query)}`, `${global.APIs.siputzx.url}/api/s/pinterest?query=${encodeURIComponent(query)}&type=image`]

@@ -16,8 +16,8 @@ export default {
       await m.react('🕒')
       let user = globalThis.db.data.users[m.sender] || {}
       const name = user.name || m.sender.split('@')[0]
-      let texto1 = user.metadatos || `ʏᴜᴋɪ 🧠 Wᴀʙᴏᴛ'ꜱ`
-      let texto2 = user.metadatos2 || `@${name}`
+      let texto1 = user.metadatos || `𝙰𝚢𝚊𝚜𝚎 ɪᴀ 𝚆ᴀ𝙱ᴏᴛ's\n𝚍𝚎𝚟 𝚂ᴇʀɢɪᴏ`
+      let texto2 = user.metadatos2 || `𝚅2.1`
       const res = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(emoji1)}_${encodeURIComponent(emoji2)}`)
       if (!res.results || res.results.length === 0) throw new Error('《✧》 No se encontraron stickers para esos emojis.')
       for (let result of res.results) {

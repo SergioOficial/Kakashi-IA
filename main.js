@@ -35,10 +35,10 @@ const chat = global.db.data.chats[m.chat] || {}
 const settings = global.db.data.settings[botJid] || {}  
 const user = global.db.data.users[sender] ||= {}
 const users = chat.users[sender] || {}
-const rawBotname = settings.namebot || 'Kakashi'
+const rawBotname = settings.namebot || '𝐌𝐨𝐦𝐨 𝐀𝐲𝐚𝐬𝐞'
 const tipo = settings.type || 'Sub'
 const isValidBotname = /^[\w\s]+$/.test(rawBotname)
-const namebot = isValidBotname ? rawBotname : 'Kakashi'
+const namebot = isValidBotname ? rawBotname : '𝐀𝐲𝐚𝐬𝐞 𝐈𝐀'
 const shortForms = [namebot.charAt(0), namebot.split(" ")[0], tipo.split(" ")[0], namebot.split(" ")[0].slice(0, 2), namebot.split(" ")[0].slice(0, 3)]
 const prefixes = shortForms.map(name => `${name}`)
 prefixes.unshift(namebot)

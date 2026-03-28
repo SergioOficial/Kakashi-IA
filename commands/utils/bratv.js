@@ -17,8 +17,8 @@ export default {
       await m.react('🕒')
       let user = globalThis.db.data.users[m.sender] || {}
       const name = user.name || m.sender.split('@')[0]
-      let texto1 = user.metadatos || `ʏᴜᴋɪ 🧠 Wᴀʙᴏᴛ'ꜱ`
-      let texto2 = user.metadatos2 || `@${name}`
+      let texto1 = user.metadatos || `𝙰𝚢𝚊𝚜𝚎 ɪᴀ 𝚆ᴀ𝙱ᴏᴛ's\n𝚍𝚎𝚟 𝚂ᴇʀɢɪᴏ`
+      let texto2 = user.metadatos2 || `𝚅2.1`
       const videoBuffer = await fetchStickerVideo(text)
       const tmpFile = `./tmp-${Date.now()}.mp4`
       await fs.writeFileSync(tmpFile, videoBuffer)

@@ -55,7 +55,7 @@ const log = {
   
 const { say } = cfonts
 console.log(chalk.magentaBright('\n❀ Iniciando...'))
-  say('kakashi', {
+  say('Ayase IA', {
   align: 'center',           
   gradient: ['red', 'blue'] 
 })

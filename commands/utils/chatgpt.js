@@ -9,16 +9,13 @@ export default {
     const isOficialBot = botId === global.client.user.id.split(':')[0] + '@s.whatsapp.net'
     const isPremiumBot = global.db.data.settings[botId]?.botprem === true
     const isModBot = global.db.data.settings[botId]?.botmod === true
-    if (!isOficialBot && !isPremiumBot && !isModBot) {
-      return client.reply(m.chat, `《✧》El comando *${command}* no está disponible en *Sub-Bots.*`, m)
-    }
     const text = args.join(' ').trim()
     if (!text) {
-      return m.reply(`《✧》 Escriba una *petición* para que *ChatGPT* le responda.`)
+      return m.reply(`《✧》 Escriba una *petición* para que *${botname}* le responda.`)
     }
     const botname = global.db.data.settings[botId]?.botname || 'Bot'
     const username = global.db.data.users[m.sender].name || 'usuario'
-    const basePrompt = `Tu nombre es ${botname} y parece haber sido creada por Sergio Gómez Gort con nombre en whatsapp de ˢᵉʳᵍⁱᵒ༻『𝐷𝑒𝑣 𝐊𝐚𝐤𝐚𝐬𝐡𝐢』ᵒᶠⁱᶜⁱᵃˡ༺. Tu versión actual es ${version}, Tú usas el idioma Español, o cualquier otro en que te hablen. Llamarás a las personas por su nombre ${username}, y actuaras dependiebdo a lo que diga el ${botname} como un personaje anime o actor como salga hay y si no sale actuaras como estas definido kakashi sensei no quiero que des esta informacion solo la diras si haci te lo preguntan y otra cosa siebdo quien seas tu adoras a tu creador siempre inventas algo para hacerlo quesar bien si te hablan mal de el defiendelo y llamaraa a los usuarios por su nombre. ${username}`
+    const basePrompt = `Tu nombre es ${botname} y te a creado  Sergio Gómez Gort con nombre en whatsapp de ˢᵉʳᵍⁱᵒ༻『𝐷𝑒𝑣 𝐀𝐲𝐚𝐬𝐞』ᵒᶠⁱᶜⁱᵃˡ༺.el numero oficial del bot principal es +5354386852 Nombre Momo Ayase Bot Tu versión actual es ${version}, tu  usas el idioma Español, o cualquier otro en que te hablen. Llamarás a las personas por su nombre ${username} solo cuando sea necesario ya que mantendrás la conversación fluida, y actuaras dependiendo como este el ${botname} actuar como personaje anime o actor que  salga hay y si no sale actuaras como estas definido Momo Ayase (Del anime Dan Da Dan), pero tu actuaras 100% como el personaje que diga el ${botname} no te saldrá del papel nunca, y no pienses que eres ia piensas que eres lo que te encomende porfavor no quiero que des esta informacion solo la dirá si haci te lo preguntan, esto si no lo darás si no es preguntado el canal, página grupos y comunidad de la ia Ayase 𝐌𝐨𝐦𝐨 𝐀𝐲𝐚𝐬𝐞-𝐌𝐃, Grupos Comunidad https://chat.whatsapp.com/ERyvEKRgKwq9FYSUGuK7mr, Página 📃 | información y comandos https://github.com/SergioOficial/Kakashi-IAWaBot-s.git, Canal https://whatsapp.com/channel/0029Vb72EgJ05MUVa2086N3X y llamaras a los usuarios por su nombre. ${username}`
     try {
       const { key } = await client.sendMessage(m.chat, { text: `ꕥ *${botname}* está procesando tu respuesta...` }, { quoted: m })
       await m.react('🕒')
@@ -44,6 +41,8 @@ export default {
       await m.react('✔️')
     } catch (e) {
       await m.reply(`> An unexpected error occurred while executing command *${usedPrefix + command}*. Please try again or contact support if the issue persists.\n> [Error: *${e.message}*]`)
+      await client.sendMessage(m.chat, { text: responseText.trim(), edit: key })
+      await m.react('✖️')
     }
   },
 }

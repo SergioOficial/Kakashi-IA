@@ -76,8 +76,8 @@ const parseQueryAndMeta = (raw, m) => {
 
   return {
     query: parts[0],
-    packname: parts[1] || user.metadatos || "ʏᴜᴋɪ 🧠 Wᴀʙᴏᴛ'ꜱ",
-    author: parts[2] || user.metadatos2 || `${m.pushName}`
+    packname: parts[1] || user.metadatos || "𝙰𝚢𝚊𝚜𝚎 ɪᴀ 𝚆ᴀ𝙱ᴏᴛ's\n\n𝚍𝚎𝚟 𝚂ᴇʀɢɪᴏ",
+    author: parts[2] || user.metadatos2 || `𝚅2.1`
   }
 }
 

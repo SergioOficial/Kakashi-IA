@@ -1,5 +1,5 @@
 export default {
-  command: ['restart'],
+  command: ['restart', 'reiniciar'],
   category: 'mod',
   isOwner: true,
   run: async (client, m) => {

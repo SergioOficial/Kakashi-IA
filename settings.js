@@ -1,27 +1,27 @@
 import fs from 'fs';
 
-global.owner = ['5358090650']
-global.botNumber = ''
+global.owner = ['5358090650', '5358275267', '5354386852']
+global.botNumber = '5354386852'
 
 global.sessionName = 'Sessions/Owner'
-global.version = '^2.0 - Latest'
-global.dev = "© ⍴᥆ᥕᥱrᥱძ ᑲᥡ Sergio"
+global.version = '^2.3 - The end '
+global.dev = "© ⍴᥆ᥕᥱrᥱძ ᑲᥡ ˢᵉʳᵍⁱᵒ|𝐝𝐞𝐯 𝐀𝐲𝐚𝐬𝐞"
 global.links = {
 api: 'https://api.nightlight.qzz.io',
 web: 'http://localhost:5010',
 channel: "https://whatsapp.com/channel/0029Vb72EgJ05MUVa2086N3X",
-github: "https://github.com/The-King-Destroy/YukiBot-MD",
+github: "https://github.com/SergioOficial/Kakashi-IAWaBot-s.git",
 gmail: "sergiogomez9@gmail.com"
 }
 global.my = {
 ch: '120363404861393174@newsletter',
-name: '⍪≆𝐊𝐚𝐤𝐚𝐬𝐡𝐢 𝐈𝐀 •≏ 𝐎𝐟𝐢𝐜𝐢𝐚𝐥 𝐜𝐡𝐚𝐧𝐧𝐞𝐥⎚',
+name: "⍪≆𝐀𝐲𝐚𝐬𝐞'𝙎 𝙒𝙖 𝘽𝙤𝙩'𝙎 •≏ 𝐎𝐟𝐢𝐜𝐢𝐚𝐥 𝐜𝐡𝐚𝐧𝐧𝐞𝐥⎚",
 }
 
 global.mess = {
-socket: '《✧》 Este comando solo puede ser ejecutado por un Socket.',
-admin: '《✧》 Este comando solo puede ser ejecutado por los Administradores del Grupo.',
-botAdmin: '《✧》 Este comando solo puede ser ejecutado si el Socket es Administrador del Grupo.'
+socket: '《✧》 Este comando solo puede ser ejecutado por un bot o creador.',
+admin: '《✧》 Este comando solo puede ser ejecutado por los amos del Grupo.',
+botAdmin: '《✧》 Este comando solo puede ser ejecutado si el bot es Administrador del Grupo.'
 }
 
 global.APIs = {

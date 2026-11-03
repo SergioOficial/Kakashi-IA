@@ -1,18 +1,18 @@
 > [!IMPORTANT]
-> **Este proyecto está en constante evolución. Estamos comprometidos en ofrecer a nuestra comunidad un Bot increíble. Te invitamos a instalarlo y para estar al tanto de todas las novedades. [¡Únete a nuestro nuevo canal!](https://whatsapp.com/channel/0029Vb64nWqLo4hb8cuxe23n)**
+> **Este proyecto está en constante evolución. Estamos comprometidos en ofrecer a nuestra comunidad un Bot increíble. Te invitamos a instalarlo y para estar al tanto de todas las novedades. [¡Únete a nuestro nuevo canal!](https://whatsapp.com/channel/0029VbDLUk5H5JLsWeYxxD1d)**
 
 <p align="center"> 
-<img src="https://cdn2.sockywa.xyz/b1sSs.jpeg" alt="YukiBot-MD" style="width: 75%; height: auto; max-width: 100px;">
+<img src="https://cdn2.sockywa.xyz/b1sSs.jpeg" alt="Kakashi-IA" style="width: 75%; height: auto; max-width: 100px;">
 
 <p align="center"> 
-<a href="#"><img title="YukiBot-MD" src="https://img.shields.io/badge/¡Disfruta de un Bot totalmente gratuito, con múltiples funciones y de código abierto! -purple?colorA=%239b33b0&colorB=%231c007b&style=for-the-badge"></a> 
+<a href="#"><img title="Kakashi-IA" src="https://img.shields.io/badge/¡Disfruta de un Bot totalmente gratuito, con múltiples funciones y de código abierto! -purple?colorA=%239b33b0&colorB=%231c007b&style=for-the-badge"></a> 
 </p>
 
 ---
 
 ## 🪾 Descripción 
 
-Yuki Bot es un bot de WhatsApp multifuncional basado en `baileys`. Este bot ofrece una variedad de características para mejorar tu experiencia en WhatsApp.
+Nekotoryu Bot es un bot de WhatsApp multifuncional basado en `baileys`. Este bot ofrece una variedad de características para mejorar tu experiencia en WhatsApp.
 
 ---
 
@@ -40,11 +40,11 @@ Siempre usa la librería principal y oficial de Baileys.
 <summary><strong>🍒 Cloud</strong> — Shell</summary>
 
 ```bash
-git clone https://github.com/iamDestroy/YukiBot-MD
+git clone https://github.com/SergioOficial/Kakashi-IA 
 ```
 
 ```bash
-cd YukiBot-MD
+cd Kakashi-IA
 ```
 
 ```bash
@@ -72,11 +72,11 @@ apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
 ```
 
 ```bash
-git clone https://github.com/iamDestroy/YukiBot-MD
+git clone https://github.com/SergioOficial/Kakashi-IA
 ```
 
 ```bash
-cd YukiBot-MD
+cd Kakashi-IA
 ```
 
 ```bash
@@ -98,7 +98,7 @@ npm start
 <details>
 <summary><strong>🍒 Comandos para tener mas tiempo activo</strong> — el Bot</summary>
 
-> *Ejecutar estos comandos dentro de la carpeta YukiBot-MD*
+> *Ejecutar estos comandos dentro de la carpeta  Kakashi-IA*
 ```bash
 termux-wake-lock && npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs 
 ``` 
@@ -129,12 +129,12 @@ pm2 start index
 ### En caso de detenerse
 > _Si despues que ya instalastes tu bot y termux te salta en blanco, se fue tu internet o reiniciaste tu celular, solo realizaras estos pasos:_
 ```bash
-cd && cd YukiBot-MD && npm start
+cd && cd Kakashi-IA && npm start
 ```
 ---
 
 ### Obtener nuevo inicio de Sessión 
-> *Detén el bot, haz click en el símbolo (ctrl) [default=z] usar la letra "z" + "ENTER" hasta que salga algo verdes similar a: `YukiBot-MD $`*
+> *Detén el bot, haz click en el símbolo (ctrl) [default=z] usar la letra "z" + "ENTER" hasta que salga algo verdes similar a: `Kakashi-IA $`*
  
 ```bash 
 cd && cd Kakashi-IA && rm -rf Sessions/Owner && npm start

@@ -137,7 +137,7 @@ cd && cd YukiBot-MD && npm start
 > *Detén el bot, haz click en el símbolo (ctrl) [default=z] usar la letra "z" + "ENTER" hasta que salga algo verdes similar a: `YukiBot-MD $`*
  
 ```bash 
-cd && cd YukiBot-MD && rm -rf Sessions/Owner && npm start
+cd && cd Kakashi-IA && rm -rf Sessions/Owner && npm start
 ```
 </details>
 
@@ -213,11 +213,11 @@ cd && cd YukiBot-MD && rm -rf Sessions/Owner && npm start
 
 ### 🦋 Colaboradores
 <a href="https://api.nightlight.qzz.io">
-  <img src="https://contrib.rocks/image?repo=iamDestroy/YukiBot-MD" />
+  <img src="https://contrib.rocks/image?repo=SergioOficial/Nekotoryu-MD" />
 </a>
 
 ### 🌼 Agradecimientos
-[![ZyxlJs](https://github.com/DevZyxlJs.png?size=100)](https://github.com/brayanflores29925-ctrl) [![Dev Subaru](https://github.com/levi-hub805.png?size=100)](https://github.com/levi-hub805)
+[![Brayan](https://github.com/brayanflores29925-ctrl.png?size=100)](https://github.com/brayanflores29925-ctrl) [![Dev Subaru](https://github.com/levi-hub805.png?size=100)](https://github.com/levi-hub805)
 
 ### 💐 Propietario
 [![King](https://github.com/SergioOficial.png?size=120)](https://github.com/SergioOficial)

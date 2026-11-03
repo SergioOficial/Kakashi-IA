@@ -217,8 +217,8 @@ cd && cd YukiBot-MD && rm -rf Sessions/Owner && npm start
 </a>
 
 ### 🌼 Agradecimientos
-[![ZyxlJs](https://github.com/DevZyxlJs.png?size=100)](https://github.com/DevZyxlJs) [![Carlos](https://github.com/AzamiJs.png?size=100)](https://github.com/AzamiJs)
+[![ZyxlJs](https://github.com/DevZyxlJs.png?size=100)](https://github.com/brayanflores29925-ctrl) [![Dev Subaru](https://github.com/levi-hub805.png?size=100)](https://github.com/levi-hub805)
 
 ### 💐 Propietario
-[![King](https://github.com/iamDestroy.png?size=120)](https://github.com/iamDestroy)
+[![King](https://github.com/SergioOficial.png?size=120)](https://github.com/SergioOficial)
 # Kakashi-IAWaBot-s

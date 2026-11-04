@@ -101,11 +101,11 @@ if (isRender) {
 // MOSTRAR BANNER
 const { say } = cfonts
 console.log(chalk.magentaBright('\n❀ Iniciando...'))
-say('Ayase IA', {
+say('Kakashi IA', {
   align: 'center',
   gradient: ['red', 'blue']
 })
-say('Made with love by sergio', {
+say('Made with love by SergioOficial', {
   font: 'console',
   align: 'center',
   gradient: ['blue', 'magenta']

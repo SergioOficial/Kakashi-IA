@@ -18,12 +18,12 @@ global.links = {
 api: 'https://tester-web.onrender.com/',
 web: 'http://localhost:5010',
 channel: "https://whatsapp.com/channel/0029VbDLUk5H5JLsWeYxxD1d",
-github: "https://github.com/SergioOficial/Celestial-AI.git",
-gmail: "sergiogomez9@gmail.com"
+github: "https://github.com/SergioOficial/Kakashi-IA.git",
+gmail: "sergiogomezgort9@gmail.com"
 }
 global.my = {
 ch: '120363415858789528@newsletter',
-name: "⍪❖Ƭʜᴇ Nεƙօէօɾყմ —͟͟͞͞�� •≏ 𝐎𝐟𝐢𝐜𝐢𝐚𝐥 𝐜𝐡𝐚𝐧𝐧𝐞𝐥⎚",
+name: "⍪❖Ƭʜᴇ Kakashi—͟͟͞͞�� •≏ 𝐎𝐟𝐢𝐜𝐢𝐚𝐥 𝐜𝐡𝐚𝐧𝐧𝐞𝐥⎚",
 }
 
 global.mess = {
